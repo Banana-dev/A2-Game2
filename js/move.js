@@ -43,7 +43,7 @@ var jamy = {
 
 	draw : function(){
     	ilovejamy.context.fillStyle = "rgb(200, 0, 0)";
-    	ilovejamy.context.fillRect(this.position.x, this.position.y, this.size.width, this.size.height, );
+    	ilovejamy.context.fillRect(jamy.position.x, jamy.position.y, jamy.size.width, jamy.size.height);
 	},
 
 	reset : function(){
@@ -84,7 +84,7 @@ var player = {
 
 	draw : function(){
     	ilovejamy.context.fillStyle = "rgb(0, 200, 0)";
-    	ilovejamy.context.fillRect(this.position.x, this.position.y, this.size.width, this.size.height);
+    	ilovejamy.context.fillRect(spontex.position.x, spontex.position.y, spontex.size.width, spontex.size.height);
 
     	ilovejamy.context.textAlign = "center";
     	ilovejamy.context.fillStyle = "rgba(0, 0, 0, .2)";
