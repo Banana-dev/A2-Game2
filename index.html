@@ -1,12 +1,22 @@
 <!DOCTYPE html>
 <head>
-	<meta charset="UTF-8">
-	<script src= "libraries/jquery-3.2.1.min.js"></script>
-	<link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <script src="libraries/jquery-3.2.1.min.js"></script>
+    <link rel="stylesheet" href="style.css">
+    <title>Hmmm... Tasty !</title>
 </head>
 <body>
-	<canvas width="1024" height="768" id="niglou">
-	  <p>Your browser does not support this feature</p>
-	</canvas>
-	<script src= "js/move.js"></script>
+
+<canvas width="1024" height="768" id="niglou">
+    <p>Your browser does not support this feature</p>
+</canvas>
+
+<script src="js/move.js"></script>
+<script>
+  var interface = new interface('niglou')
+</script>
+<!-- Boutons -->
+<button onclick="interface.start()">Start</button>
+<button onclick="interface.stop()">Stop</button>
+
 </body>

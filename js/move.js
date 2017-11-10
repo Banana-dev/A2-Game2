@@ -68,11 +68,13 @@ var interface = function (element) {
    * Dessine l'interface
    */
   this.draw = function () {
+    console.log('tick')
+
     // Nettoyage de la zone
-    this.context.clearRect(0, 0, this.size.width, this.size.height)
+    that.context.clearRect(0, 0, that.size.width, that.size.height)
 
     // Dessin du pad
-    this.board.draw(this.context)
+    that.board.draw(that.context)
   }
 
   /**
@@ -87,10 +89,7 @@ var interface = function (element) {
    * Démarre le timer
    */
   this.start = function () {
-    this.instance = setInterval(function () {
-      console.log('tick')
-      that.draw(that.draw)
-    }, 1000 / 120)
+    this.instance = setInterval(that.draw, 1000 / 120)
   }
 
   /**
@@ -104,10 +103,7 @@ var interface = function (element) {
   /**********************
    * Evènements materiels
    */
-  window.addEventListener('mousemove', function (e) {
-    //console.log(this.board.position.x)
-    that.board.position.x = e.clientX
-  }, false)
+  window.addEventListener('mousemove', this.board.move, false)
 }
 
 /**
@@ -169,7 +165,7 @@ var brick = function () {
  * @returns {board}
  */
 var board = function (gameHeigth) {
-
+  var that = this
   /**
    * Position du pad
    * @type {{x: number, y: number}}
@@ -189,6 +185,25 @@ var board = function (gameHeigth) {
   }
 
   /**
+   * Modificateurs de pad
+   * @type {Array}
+   */
+  this.modifiers = []
+
+  this.move = function (e) {
+    //console.log(this.board.position.x)
+    console.log(e.clientX)
+    if (e.clientX > (1024 - that.size.width)) {
+    	that.position.x = 1024 - that.size.width;
+    }
+    else if (e.clientX < that.size.width / 2) {
+    	that.position.x = that.size.width / 2;
+    }
+    else {
+    	that.position.x = e.clientX;
+    }
+  }
+  /**
    * Fonction de dessin de la board
    *
    * @param {CanvasRenderingContext2D} context Contexte Canvas 2D
@@ -197,12 +212,6 @@ var board = function (gameHeigth) {
     context.fillStyle = 'rgb(0, 200, 0)'
     context.fillRect(this.position.x - (this.size.width / 2), this.position.y, this.size.width, this.size.height)
   }
-
-  /**
-   * Modificateurs de pad
-   * @type {Array}
-   */
-  this.modifiers = []
 
   return this
 }
@@ -218,4 +227,3 @@ var ball = function () {
 
   return this
 }
-
