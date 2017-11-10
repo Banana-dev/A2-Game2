@@ -14,9 +14,30 @@ var ilovejamy = {
     //	}
 //
     	window.addEventListener('mousemove', controller.move, false);
-    	jamy.draw();
-    	player.draw();
-	}
+        // window.addEventListener('keydown', controller.keypress, true);
+        jamy.draw();
+        player.draw();
+        this.update();
+
+	},
+
+    update : function(){
+
+        ilovejamy.clearContext();
+
+        player.draw();
+
+        requestAnimationFrame(ilovejamy.update);
+    },
+
+    clearContext : function(){
+        this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
+        return;
+    },
+
+    canvas: null,
+    context : null,
+    timeout: 33
 };
 
 var jamy = {
@@ -33,7 +54,7 @@ var jamy = {
 	},
 
 	physics: {
-		speed: 10
+		speed: 50
 	},
 
 	direction: {
@@ -54,29 +75,57 @@ var jamy = {
 	}
 };
 
-var spontex = {
-	
-	position: {
-		x: 512,
-		y: 700
-	},
-	
-	size: {
-		height: 25,
-		width: 80
-
-
-	}
-};
+// var spontex = {
+//
+// 	position: {
+// 		x: 512,
+// 		y: 700
+// 	},
+//
+// 	size: {
+// 		height: 25,
+// 		width: 80
+//
+//
+// 	}
+// };
 
 var controller = {
 
-	move: function(event){
-		spontex.x = event.clientX;
-  	},
+    // keypress : function(event) {
+    //
+    //     switch (event.keyCode)
+    //     {
+    //         case 37:
+    //             player.moveLeft();
+    //             break;
+    //         case 39:
+    //             player.moveRight();
+    //             break;
+    //     }
+    // }
+    move: function(event){
+        console.log(event);
+        player.position.x = event.clientX;
+    }
+
 };
 
 var player = {
+
+    position: {
+        x: 512,
+        y: 700
+    },
+
+    size: {
+        height: 25,
+        width: 80
+    },
+
+    physics: {
+        speed: 10
+    },
 	
 	score: 0,
 
@@ -84,7 +133,7 @@ var player = {
 
 	draw : function(){
     	ilovejamy.context.fillStyle = "rgb(0, 200, 0)";
-    	ilovejamy.context.fillRect(spontex.position.x, spontex.position.y, spontex.size.width, spontex.size.height);
+    	ilovejamy.context.fillRect(this.position.x, this.position.y, this.size.width, this.size.height);
 
     	ilovejamy.context.textAlign = "center";
     	ilovejamy.context.fillStyle = "rgba(0, 0, 0, .2)";
@@ -101,7 +150,17 @@ var player = {
   	reset: function(){
     	this.lives = 3;
     	this.score = 0;
-    	spontex.position.x = 512;
+    	this.position.x = 512;
+    },
+
+    moveLeft: function(){
+        if (this.position.x > 0)
+            this.position.x -= this.physics.speed;
+    },
+
+    moveRight: function(){
+        if (this.position.x < (ilovejamy.canvas.width - this.size.width))
+            this.position.x += this.physics.speed;
     }
 };
 
